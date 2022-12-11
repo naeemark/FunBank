@@ -11,4 +11,11 @@ import lombok.Generated;
 @Generated
 public class Constants {
     public static final String SERVICE_NAME = "FunBankService";
+
+    public static final int DEFAULT_BALANCE = 100;
+
+    public static final String ERROR_ACCOUNT_NOT_FOUND = "Requested account is not found in the system";
+    public static final String ERROR_ACCOUNT_SERVICE = "Something wrong happened in AccountService";
+    public static final String ERROR_DUPLICATE_KEY_ATTRIBUTE = "Duplication of such attribute is not allowed";
+
 }
