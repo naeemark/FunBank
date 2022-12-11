@@ -10,4 +10,5 @@ import com.naeemark.fbs.models.Account;
 public interface AccountService {
 
     Account create();
+    Account get(int accountId);
 }

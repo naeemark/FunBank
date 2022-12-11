@@ -2,6 +2,8 @@ package com.naeemark.fbs.services;
 
 import com.naeemark.fbs.models.Account;
 import com.naeemark.fbs.repositories.AccountRepository;
+import java.rmi.NoSuchObjectException;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import static com.naeemark.fbs.utils.Constants.DEFAULT_BALANCE;
+import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_NOT_FOUND;
 import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_SERVICE;
 import static com.naeemark.fbs.utils.Constants.ERROR_DUPLICATE_KEY_ATTRIBUTE;
 
@@ -43,5 +46,12 @@ public class AccountServiceImpl implements AccountService {
             logger.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, ERROR_ACCOUNT_SERVICE);
         }
+    }
+
+    @Override
+    public Account get(int accountId) {
+        Optional<Account> getById = accountRepository.findById(accountId);
+        if (getById.isPresent()) return getById.get();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, ERROR_ACCOUNT_NOT_FOUND);
     }
 }

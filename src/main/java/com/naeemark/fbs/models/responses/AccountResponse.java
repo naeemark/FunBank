@@ -1,5 +1,6 @@
 package com.naeemark.fbs.models.responses;
 
+import com.naeemark.fbs.models.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,9 @@ public class AccountResponse {
 
     private int id;
     private int balance;
+
+    public AccountResponse(Account account) {
+        this.id = account.getId();
+        this.balance = account.getBalance();
+    }
 }
