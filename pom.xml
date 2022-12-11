@@ -11,7 +11,6 @@
     <groupId>com.naeemark.fbs</groupId>
     <artifactId>task</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
     <name>FunBankService</name>
     <description>Assignment project for Spring Boot</description>
 
