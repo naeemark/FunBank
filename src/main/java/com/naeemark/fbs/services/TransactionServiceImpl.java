@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_BALANCE;
-import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_SAME;
-import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_SERVICE;
 
 @Service
 @Transactional
@@ -27,9 +25,7 @@ public class TransactionServiceImpl implements TransactionService{
     public void create(TransactionRequest transactionRequest) {
         logger.info(TransactionService.class.getName()+"::create()");
         logger.info(transactionRequest.toString());
-        if (transactionRequest.getFromAccountId() == transactionRequest.getToAccountId()){
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, ERROR_ACCOUNT_SAME);
-        }
+
         Account from = accountService.get(transactionRequest.getFromAccountId());
         Account to = accountService.get(transactionRequest.getToAccountId());
         if (transactionRequest.getAmount() > from.getBalance()){
