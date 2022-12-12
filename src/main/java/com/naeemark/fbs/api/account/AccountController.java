@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,12 +69,11 @@ public class AccountController {
             @ApiResponse(code = 422, message = "Request not processable")
     })
     @GetMapping(value = "/{accountId}")
-    public AccountResponse get(@Valid @PathVariable int accountId) {
+    public ResponseEntity<Account> get(@Valid @PathVariable int accountId) {
         logger.info("Request received to get Account");
         Account account = accountService.get(accountId);
-        return new AccountResponse(account);
+        return ResponseEntity.ok(account);
     }
-
 
     /**
      * Gets Accounts List
@@ -87,9 +87,10 @@ public class AccountController {
             @ApiResponse(code = 422, message = "Request not processable")
     })
     @GetMapping
-    public ResponseEntity<List<Account>> list() {
+    public ResponseEntity<List<AccountResponse>> list() {
         logger.info("Request received for Accounts List");
         List<Account> accounts = accountService.list();
-        return ResponseEntity.ok(accounts);
+        List<AccountResponse> list = accounts.stream().map(AccountResponse::new).collect(Collectors.toList());
+        return ResponseEntity.ok(list);
     }
 }

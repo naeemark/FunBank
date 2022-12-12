@@ -31,10 +31,8 @@ import static com.naeemark.fbs.utils.Constants.ERROR_DUPLICATE_KEY_ATTRIBUTE;
 public class AccountServiceImpl implements AccountService {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
-
     @Autowired
     AccountRepository accountRepository;
-
     @Override
     public Account create() {
         try {

@@ -2,21 +2,23 @@ package com.naeemark.fbs.api.transaction;
 
 
 import com.naeemark.fbs.api.account.AccountController;
-import com.naeemark.fbs.models.Account;
+import com.naeemark.fbs.models.Transaction;
 import com.naeemark.fbs.models.requests.TransactionRequest;
 import com.naeemark.fbs.models.responses.AccountResponse;
-import com.naeemark.fbs.services.AccountService;
+import com.naeemark.fbs.models.responses.TransactionResponse;
 import com.naeemark.fbs.services.TransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,9 +52,28 @@ public class TransactionController {
             @ApiResponse(code = 422, message = "Request not processable")
     })
     @PostMapping
-    public ResponseEntity<Account> create(@Valid @RequestBody TransactionRequest transactionRequest) {
+    public ResponseEntity<TransactionResponse> create(@Valid @RequestBody TransactionRequest transactionRequest) {
         logger.info(String.format("Request received for creation: %s", transactionRequest));
-        transactionService.create(transactionRequest);
-        return ResponseEntity.ok().build();
+        Transaction transaction = transactionService.create(transactionRequest);
+        return ResponseEntity.ok().body(new TransactionResponse(transaction));
+    }
+
+    /**
+     * Gets Transactions
+     *
+     * @return List of Transactions
+     */
+    @ApiOperation(value = "List Transactions", notes = "Gets all accounts with balance", response = TransactionResponse.class, tags = {"2 - Transactions"})
+    @ApiResponses(value = {
+            @ApiResponse(code = 304, message = "Operation was not successful"),
+            @ApiResponse(code = 417, message = "Expectations failed"),
+            @ApiResponse(code = 422, message = "Request not processable")
+    })
+    @GetMapping
+    public ResponseEntity<List<TransactionResponse>> list() {
+        logger.info("Request received for Accounts List");
+        List<Transaction> transactions = transactionService.list();
+        List<TransactionResponse> list = transactions.stream().map(TransactionResponse::new).collect(Collectors.toList());
+        return ResponseEntity.ok(list);
     }
 }

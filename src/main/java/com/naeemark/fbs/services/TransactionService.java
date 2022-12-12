@@ -1,6 +1,8 @@
 package com.naeemark.fbs.services;
 
+import com.naeemark.fbs.models.Transaction;
 import com.naeemark.fbs.models.requests.TransactionRequest;
+import java.util.List;
 
 /**
  * Created by Naeem <naeemark@gmail.com>.
@@ -8,5 +10,6 @@ import com.naeemark.fbs.models.requests.TransactionRequest;
  * Created on: 2022-12-12
  */
 public interface TransactionService {
-    void create(TransactionRequest transactionRequest);
+    Transaction create(TransactionRequest transactionRequest);
+    List<Transaction> list();
 }
