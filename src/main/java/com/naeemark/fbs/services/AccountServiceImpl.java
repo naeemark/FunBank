@@ -2,7 +2,7 @@ package com.naeemark.fbs.services;
 
 import com.naeemark.fbs.models.Account;
 import com.naeemark.fbs.repositories.AccountRepository;
-import java.rmi.NoSuchObjectException;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,5 +53,10 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> getById = accountRepository.findById(accountId);
         if (getById.isPresent()) return getById.get();
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, ERROR_ACCOUNT_NOT_FOUND);
+    }
+
+    @Override
+    public List<Account> list() {
+        return accountRepository.findAll();
     }
 }

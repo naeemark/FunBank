@@ -1,6 +1,7 @@
 package com.naeemark.fbs.services;
 
 import com.naeemark.fbs.models.Account;
+import java.util.List;
 
 /**
  * Created by Naeem <naeemark@gmail.com>.
@@ -11,4 +12,5 @@ public interface AccountService {
 
     Account create();
     Account get(int accountId);
+    List<Account> list();
 }

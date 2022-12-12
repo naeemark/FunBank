@@ -7,13 +7,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.Collections;
+import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,11 +70,34 @@ public class AccountController {
             @ApiResponse(code = 417, message = "Expectations failed"),
             @ApiResponse(code = 422, message = "Request not processable")
     })
-    @GetMapping(value = "/account")
-    public AccountResponse get(@Valid @RequestParam int accountId) {
+    @GetMapping(value = "/account/{accountId}")
+    public AccountResponse get(@Valid @PathVariable int accountId) {
         logger.info("Request received");
 
         Account account = accountService.get(accountId);
         return new AccountResponse(account);
+    }
+
+
+    /**
+     * Gets Accounts List
+     *
+     * @return Account Response
+     */
+    @ApiOperation(value = "List Accounts", notes = "Gets all accounts with balance", response = AccountResponse.class, tags = {"1 - Account"})
+    @ApiResponses(value = {
+            @ApiResponse(code = 304, message = "Operation was not successful"),
+            @ApiResponse(code = 417, message = "Expectations failed"),
+            @ApiResponse(code = 422, message = "Request not processable")
+    })
+    @GetMapping(value = "/account")
+    public ResponseEntity<List<Account>> list() {
+        logger.info("Request received for Accounts List");
+
+        List<Account> accounts = accountService.list();
+        if (accounts.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(accounts);
     }
 }
