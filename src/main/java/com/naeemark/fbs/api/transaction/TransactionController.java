@@ -4,19 +4,20 @@ package com.naeemark.fbs.api.transaction;
 import com.naeemark.fbs.api.account.AccountController;
 import com.naeemark.fbs.models.Transaction;
 import com.naeemark.fbs.models.requests.TransactionRequest;
-import com.naeemark.fbs.models.responses.AccountResponse;
 import com.naeemark.fbs.models.responses.TransactionResponse;
 import com.naeemark.fbs.services.TransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,7 @@ public class TransactionController {
      *
      * @return Account Response
      */
-    @ApiOperation(value = "Create Transaction", notes = "Creates a new transaction", response = AccountResponse.class, tags = {"2 - Transactions"})
+    @ApiOperation(value = "Create Transaction", notes = "Creates a new transaction", response = TransactionResponse.class, tags = {"2 - Transactions"})
     @ApiResponses(value = {
             @ApiResponse(code = 304, message = "Operation was not successful"),
             @ApiResponse(code = 417, message = "Expectations failed"),
@@ -55,7 +56,7 @@ public class TransactionController {
     public ResponseEntity<TransactionResponse> create(@Valid @RequestBody TransactionRequest transactionRequest) {
         logger.info(String.format("Request received for creation: %s", transactionRequest));
         Transaction transaction = transactionService.create(transactionRequest);
-        return ResponseEntity.ok().body(new TransactionResponse(transaction));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponse(transaction));
     }
 
     /**
@@ -63,7 +64,7 @@ public class TransactionController {
      *
      * @return List of Transactions
      */
-    @ApiOperation(value = "List Transactions", notes = "Gets all accounts with balance", response = TransactionResponse.class, tags = {"2 - Transactions"})
+    @ApiOperation(value = "List Transactions", notes = "Gets all accounts with balance", response = Collection.class, tags = {"2 - Transactions"})
     @ApiResponses(value = {
             @ApiResponse(code = 304, message = "Operation was not successful"),
             @ApiResponse(code = 417, message = "Expectations failed"),

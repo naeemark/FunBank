@@ -24,14 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by Naeem <naeemark@gmail.com>.
  * <p>
- * Created on: 2020-08-21
+ * Created on: 2022-12-12
  */
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AccountController.class)
-@DisplayName("Unit tests for LoginController")
+@DisplayName("Unit tests for AccountController")
 class AccountControllerTest {
-
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,7 +43,7 @@ class AccountControllerTest {
 
 
     @Test
-    @DisplayName("POST Create Account - success")
+    @DisplayName("POST Create - success")
     void create_Success() throws Exception {
         Account account = new Account(1, 100);
         //given
@@ -61,7 +60,7 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("GET Account - success")
+    @DisplayName("GET - success")
     void getAccount_Success() throws Exception {
         Account account = new Account(1, 100);
         //given
@@ -78,7 +77,7 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("GET Accounts List - success")
+    @DisplayName("GET List - success")
     void list_Success() throws Exception {
         Account account = new Account(1, 100);
         //given

@@ -2,11 +2,14 @@ package com.naeemark.fbs.api.account;
 
 import com.naeemark.fbs.models.Account;
 import com.naeemark.fbs.models.responses.AccountResponse;
+import com.naeemark.fbs.models.responses.TransactionResponse;
 import com.naeemark.fbs.services.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -49,10 +52,10 @@ public class AccountController {
             @ApiResponse(code = 422, message = "Request not processable")
     })
     @PostMapping
-    public ResponseEntity<Account> create() {
+    public ResponseEntity<AccountResponse> create() {
         logger.info("Request received for creation");
         Account account = accountService.create();
-        return ResponseEntity.status(HttpStatus.CREATED).body(account);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AccountResponse(account));
     }
 
     /**
@@ -69,10 +72,10 @@ public class AccountController {
             @ApiResponse(code = 422, message = "Request not processable")
     })
     @GetMapping(value = "/{accountId}")
-    public ResponseEntity<Account> get(@Valid @PathVariable int accountId) {
+    public ResponseEntity<AccountResponse> get(@Valid @PathVariable int accountId) {
         logger.info("Request received to get Account");
         Account account = accountService.get(accountId);
-        return ResponseEntity.ok(account);
+        return ResponseEntity.ok(new AccountResponse(account));
     }
 
     /**
@@ -80,7 +83,7 @@ public class AccountController {
      *
      * @return Account Response
      */
-    @ApiOperation(value = "List Accounts", notes = "Gets all accounts with balance", response = AccountResponse.class, tags = {"1 - Accounts"})
+    @ApiOperation(value = "List Accounts", notes = "Gets all accounts with balance", response = Collection.class, tags = {"1 - Accounts"})
     @ApiResponses(value = {
             @ApiResponse(code = 304, message = "Operation was not successful"),
             @ApiResponse(code = 417, message = "Expectations failed"),
