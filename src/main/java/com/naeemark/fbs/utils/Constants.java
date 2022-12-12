@@ -16,6 +16,8 @@ public class Constants {
 
     public static final String ERROR_ACCOUNT_NOT_FOUND = "Requested account is not found in the system";
     public static final String ERROR_ACCOUNT_SERVICE = "Something wrong happened in AccountService";
+    public static final String ERROR_ACCOUNT_BALANCE = "Operation can not be completed for request amount";
+    public static final String ERROR_ACCOUNT_SAME = "Operation can not be completed for same account";
     public static final String ERROR_DUPLICATE_KEY_ATTRIBUTE = "Duplication of such attribute is not allowed";
 
 }

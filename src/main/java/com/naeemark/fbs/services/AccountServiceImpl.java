@@ -2,6 +2,7 @@ package com.naeemark.fbs.services;
 
 import com.naeemark.fbs.models.Account;
 import com.naeemark.fbs.repositories.AccountRepository;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -58,5 +59,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> list() {
         return accountRepository.findAll();
+    }
+
+    @Override
+    public void update(Account to, Account from) {
+        accountRepository.saveAll(Arrays.asList(to, from));
     }
 }
