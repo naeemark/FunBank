@@ -54,7 +54,7 @@ public class TransactionController {
     })
     @PostMapping
     public ResponseEntity<TransactionResponse> create(@Valid @RequestBody TransactionRequest transactionRequest) {
-        logger.info(String.format("Request received for creation: %s", transactionRequest));
+        logger.info("Request received for creation: {}", transactionRequest);
         Transaction transaction = transactionService.create(transactionRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponse(transaction));
     }

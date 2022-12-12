@@ -5,12 +5,17 @@ import com.naeemark.fbs.repositories.AccountRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_NOT_FOUND;
@@ -25,15 +30,22 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@Transactional
+@ActiveProfiles("test")
 class AccountServiceTest {
 
     @Autowired
-    private AccountService service;
+    private AccountServiceImpl service;
 
     @MockBean
     private AccountRepository repository;
 
     final Account testAccount = new Account(1, 1);
+
+    @BeforeEach
+    void mockCache() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     @DisplayName("Create - Success")

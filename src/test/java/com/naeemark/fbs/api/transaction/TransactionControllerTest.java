@@ -49,6 +49,8 @@ class TransactionControllerTest {
     @MockBean
     private TransactionRepository repository;
 
+    @MockBean
+    private AccountRepository accountRepository;
 
     @Test
     @DisplayName("POST Create - success")
