@@ -7,18 +7,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.Collections;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
  * Created on: 2022-12-11
  */
 
-@Api(tags = "1 - Account", description = "Operations related to User Registration")
+@Api(tags = "1 - Accounts", description = "Operations related to Accounts")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     @Autowired
@@ -42,19 +41,17 @@ public class AccountController {
      *
      * @return Account Response
      */
-    @ApiOperation(value = "Create Account", notes = "Creates a new account with default balance = 100", response = AccountResponse.class, tags = {"1 - Account"})
+    @ApiOperation(value = "Create Account", notes = "Creates a new account with default balance = 100", response = AccountResponse.class, tags = {"1 - Accounts"})
     @ApiResponses(value = {
             @ApiResponse(code = 304, message = "Operation was not successful"),
             @ApiResponse(code = 417, message = "Expectations failed"),
             @ApiResponse(code = 422, message = "Request not processable")
     })
-    @PostMapping(value = "/account")
-    public AccountResponse create() {
-
-        logger.info("Request received");
-
+    @PostMapping
+    public ResponseEntity<Account> create() {
+        logger.info("Request received for creation");
         Account account = accountService.create();
-        return new AccountResponse(account);
+        return ResponseEntity.status(HttpStatus.CREATED).body(account);
     }
 
     /**
@@ -62,7 +59,7 @@ public class AccountController {
      *
      * @return Account Response
      */
-    @ApiOperation(value = "Get Account by ID", notes = "Gets account with balance", response = AccountResponse.class, tags = {"1 - Account"})
+    @ApiOperation(value = "Get Account by ID", notes = "Gets account with balance", response = AccountResponse.class, tags = {"1 - Accounts"})
     @ApiResponses(value = {
             @ApiResponse(code = 304, message = "Operation was not successful"),
             @ApiResponse(code = 400, message = "Validation Error"),
@@ -70,10 +67,9 @@ public class AccountController {
             @ApiResponse(code = 417, message = "Expectations failed"),
             @ApiResponse(code = 422, message = "Request not processable")
     })
-    @GetMapping(value = "/account/{accountId}")
+    @GetMapping(value = "/{accountId}")
     public AccountResponse get(@Valid @PathVariable int accountId) {
-        logger.info("Request received");
-
+        logger.info("Request received to get Account");
         Account account = accountService.get(accountId);
         return new AccountResponse(account);
     }
@@ -84,20 +80,16 @@ public class AccountController {
      *
      * @return Account Response
      */
-    @ApiOperation(value = "List Accounts", notes = "Gets all accounts with balance", response = AccountResponse.class, tags = {"1 - Account"})
+    @ApiOperation(value = "List Accounts", notes = "Gets all accounts with balance", response = AccountResponse.class, tags = {"1 - Accounts"})
     @ApiResponses(value = {
             @ApiResponse(code = 304, message = "Operation was not successful"),
             @ApiResponse(code = 417, message = "Expectations failed"),
             @ApiResponse(code = 422, message = "Request not processable")
     })
-    @GetMapping(value = "/account")
+    @GetMapping
     public ResponseEntity<List<Account>> list() {
         logger.info("Request received for Accounts List");
-
         List<Account> accounts = accountService.list();
-        if (accounts.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(accounts);
     }
 }
