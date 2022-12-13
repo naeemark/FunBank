@@ -29,9 +29,6 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public Transaction create(TransactionRequest transactionRequest) {
-        logger.info(TransactionService.class.getName()+"::create()");
-        logger.info(transactionRequest.toString());
-
         int amount = transactionRequest.getAmount();
         Account fromAccount = accountService.get(transactionRequest.getFromAccountId());
         Account toAccount = accountService.get(transactionRequest.getToAccountId());
