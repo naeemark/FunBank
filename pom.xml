@@ -21,7 +21,8 @@
         <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
 
         <code.coverage.exclusions>
-
+            **/com/naeemark/fbs/FunBankServiceApplication.java,
+            **/com/naeemark/fbs/models/**
         </code.coverage.exclusions>
     </properties>
 
