@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : local-mysql
- Source Server Type    : MySQL
- Source Server Version : 80029
- Source Host           : localhost:3306
- Source Schema         : funbank
-
- Target Server Type    : MySQL
- Target Server Version : 80029
- File Encoding         : 65001
-
- Date: 11/12/2022 23:33:49
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
