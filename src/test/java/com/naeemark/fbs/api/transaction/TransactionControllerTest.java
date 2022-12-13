@@ -1,13 +1,10 @@
 package com.naeemark.fbs.api.transaction;
 
-import com.naeemark.fbs.api.account.AccountController;
 import com.naeemark.fbs.models.Account;
 import com.naeemark.fbs.models.Transaction;
 import com.naeemark.fbs.models.requests.TransactionRequest;
-import com.naeemark.fbs.models.responses.TransactionResponse;
 import com.naeemark.fbs.repositories.AccountRepository;
 import com.naeemark.fbs.repositories.TransactionRepository;
-import com.naeemark.fbs.services.AccountService;
 import com.naeemark.fbs.services.TransactionService;
 import com.naeemark.fbs.utils.TestDataFactory;
 import java.util.Collections;
@@ -21,8 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
