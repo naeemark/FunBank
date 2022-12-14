@@ -1,6 +1,5 @@
 package com.naeemark.fbs.api.account;
 
-import com.naeemark.fbs.repositories.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,6 @@ class AccountControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private AccountRepository repository;
 
     @Test
     @DisplayName("POST Create - success")
