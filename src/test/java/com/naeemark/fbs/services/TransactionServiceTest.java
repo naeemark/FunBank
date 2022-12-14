@@ -3,43 +3,39 @@ package com.naeemark.fbs.services;
 import com.naeemark.fbs.models.Account;
 import com.naeemark.fbs.models.Transaction;
 import com.naeemark.fbs.models.requests.TransactionRequest;
-import com.naeemark.fbs.repositories.AccountRepository;
 import com.naeemark.fbs.repositories.TransactionRepository;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_BALANCE;
-import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_SERVICE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@Transactional
-@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 class TransactionServiceTest {
 
-
-    @Autowired
-    private TransactionService service;
-    @MockBean
+    @InjectMocks
+    private TransactionServiceImpl service;
+    @Mock
     private AccountService accountService;
 
-    @MockBean
+    @Mock
     private TransactionRepository repository;
 
     final Transaction transaction = Transaction.builder().id(1).amount(1).fromAccount(new Account(1, 1)).toAccount(new Account(2, 1)).build();

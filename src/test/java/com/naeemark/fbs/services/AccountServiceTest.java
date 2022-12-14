@@ -8,13 +8,11 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import static com.naeemark.fbs.utils.Constants.ERROR_ACCOUNT_NOT_FOUND;
@@ -28,22 +26,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@Transactional
-@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
 
-    @Autowired
+    @InjectMocks
     private AccountServiceImpl service;
 
-    @MockBean
+    @Mock
     private AccountRepository repository;
 
-    final Account testAccount = new Account(1, 1);
+    private Account testAccount ;
 
     @BeforeEach
-    void mockCache() {
-        MockitoAnnotations.initMocks(this);
+    public void setup(){
+        testAccount = new Account(1, 1);
     }
 
     @Test
@@ -74,6 +70,17 @@ class AccountServiceTest {
         when(repository.findById(anyInt())).thenReturn(Optional.of(testAccount));
         Account account = service.get(testAccount.getId());
         assertEquals(account.getId(), testAccount.getId());
+        verify(repository, times(1)).findById(anyInt());
+    }
+
+    @Test
+    @DisplayName("Get - Exception due to check fail")
+    void get_Exception_Fail() {
+        when(repository.findById(anyInt())).thenReturn(Optional.empty());
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> service.get(testAccount.getId()));
+        assertNotNull(exception);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(ERROR_ACCOUNT_NOT_FOUND, exception.getReason());
         verify(repository, times(1)).findById(anyInt());
     }
 

@@ -1,5 +1,6 @@
 package com.naeemark.fbs.api.health;
 
+import com.naeemark.fbs.api.health.HealthController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
