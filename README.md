@@ -10,6 +10,32 @@
 Demonstration of Requirements understanding, proposing a solution and implementation by using the latest tools and techniques.
 
 ---
+- [Distribution](#distribution)
+  - [What is this repository for?](#what-is-this-repository-for?)
+- [Problem Statement](#problem-statement)
+- [Proposed Solution](#proposed-solution)
+- [Entities](#entities)
+- [Deliverable Content](#deliverable-content)
+- [Deliverable Content](#deliverable-content)
+  - [Functional Implementation](#functional-implementation)
+  - [Non-Functional Implementation](#non-functional-implementation)
+- [Development Cycle](#development-cycle)
+- [How to Setup](#how-do-i-get-set-up)
+  - **[<< Docker Compose >>](#-docker-compose-)**
+  - [Developer Setup](#developer-set-up)
+  - [Configuration](#configuration)
+    - [Docker Build](#build-docker-image)
+    - [Docker Run](#run-docker-image)
+    - [Docker Run from Registry](#run-docker-image-from-docker-hub)
+    - [Docker Stop](#stop-docker-container)
+- [Pre-reqs](#pre-reqs)
+- [Tools Included](#tools-included)
+- [External Tools](#external-tools)
+- [Deployments](#deployment)
+- [Contribute](#contribution-guidelines)
+
+
+---
 
 ## Distribution ##
 
@@ -45,7 +71,7 @@ Demonstration of Requirements understanding, proposing a solution and implementa
 - As we are mocking a banking system, there should be a locking system on JPA to avoid auto change in schema.
 - There shouldn't be a possibility to modify the database via JPA
 - There should be a separate database to be used for testing purposes along with pre-populated data if required.
-- For demostration purpose, an API frontend should be provided...i.e Swagger
+- For demonstration purpose, an API frontend should be provided...i.e Swagger
 
 #### Entities ####
 - As per the given statement, there will be two entities
