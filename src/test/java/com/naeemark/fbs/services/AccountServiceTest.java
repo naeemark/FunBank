@@ -74,6 +74,17 @@ class AccountServiceTest {
     }
 
     @Test
+    @DisplayName("Get - Exception due to check fail")
+    void get_Exception_Fail() {
+        when(repository.findById(anyInt())).thenReturn(Optional.empty());
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> service.get(testAccount.getId()));
+        assertNotNull(exception);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(ERROR_ACCOUNT_NOT_FOUND, exception.getReason());
+        verify(repository, times(1)).findById(anyInt());
+    }
+
+    @Test
     @DisplayName("Get - Exception")
     void get_Exception() {
         when(repository.findById(anyInt())).then(invocation -> {
